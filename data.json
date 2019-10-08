@@ -1,0 +1,314 @@
+{
+    "shots": [
+        {
+            "date": "2013-04-25T18:41:15",
+            "id": "LC8_L1T_TOA/LC80430332013115LGN02",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=c6932b534300261b06a4d3a9e76f6ee4&token=667d65c25847d0f7508c2906de8dbef4"
+        },
+        {
+            "date": "2013-12-05T18:41:07",
+            "id": "LC8_L1T_TOA/LC80430332013339LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=46770bab3dcb875e3552937d8f52cfcb&token=d09b5913573bd2f6e4c1a4dab84d0592"
+        },
+        {
+            "date": "2013-12-21T18:40:57",
+            "id": "LC8_L1T_TOA/LC80430332013355LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=63cb33fdd6c12e893876a779df1d1327&token=879ee8d843269fb268ca77628eae9eb3"
+        },
+        {
+            "date": "2014-01-06T18:40:49",
+            "id": "LC8_L1T_TOA/LC80430332014006LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=b23349a52ea54ddc41786ec9fbc9fcc3&token=9796970890472e22df63157bda6acc0a"
+        },
+        {
+            "date": "2014-01-22T18:40:38",
+            "id": "LC8_L1T_TOA/LC80430332014022LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=c1dcec0ed866ba75d4e3b2e058217af7&token=30e285932ad45c1910c86fc3f50a2f0b"
+        },
+        {
+            "date": "2014-02-23T18:40:14",
+            "id": "LC8_L1T_TOA/LC80430332014054LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=903e7dac1f4f0fc428be6e54205fb783&token=3bc0bac53cd2c2ad6405cd1d4c5daf83"
+        },
+        {
+            "date": "2014-03-11T18:40:02",
+            "id": "LC8_L1T_TOA/LC80430332014070LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=a23fd95c7a00c4db68199cb5504ac66a&token=707cdeebb6ba25fa7a62d24244d97b9d"
+        },
+        {
+            "date": "2014-04-12T18:39:31",
+            "id": "LC8_L1T_TOA/LC80430332014102LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=4e2986756c44e0b4d84030714b9fa533&token=cc03c930295f399d90ca7c63a3c5abce"
+        },
+        {
+            "date": "2014-04-28T18:39:17",
+            "id": "LC8_L1T_TOA/LC80430332014118LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=ad34e6232ca27dff85bb39106f800fd7&token=0eea28c32f09af13fffc60c9288e0579"
+        },
+        {
+            "date": "2014-10-21T18:39:43",
+            "id": "LC8_L1T_TOA/LC80430332014294LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=c0120ddb60ac9c17d61a4bc481ccde6f&token=9363e04be6ba2f55263188f889f61aad"
+        },
+        {
+            "date": "2014-12-08T18:39:37",
+            "id": "LC8_L1T_TOA/LC80430332014342LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=f9a26880f60943c397543f074c03de48&token=7f87b9528af44360689ec17724de6a81"
+        },
+        {
+            "date": "2015-01-25T18:39:27",
+            "id": "LC8_L1T_TOA/LC80430332015025LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=1fa349cfc1577b9c7f7785636672b7bd&token=9f6c6b8547bc921c94fc7316d438f92d"
+        },
+        {
+            "date": "2015-02-26T18:39:17",
+            "id": "LC8_L1T_TOA/LC80430332015057LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=16a07bfcce56438bacb9c96d25ac4e4d&token=ccfc96186c8408ced0c2e578da032efb"
+        },
+        {
+            "date": "2015-03-14T18:39:05",
+            "id": "LC8_L1T_TOA/LC80430332015073LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=4f3682d7cab9400cba268f1b300a0bb9&token=9a1ba476374a4c9190b0bb7ebdf21848"
+        },
+        {
+            "date": "2015-03-30T18:38:56",
+            "id": "LC8_L1T_TOA/LC80430332015089LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=3bb29697f92876f8ac2a74da576e04bf&token=5341992378f0257dc3af8a34afddf32b"
+        },
+        {
+            "date": "2015-04-15T18:38:53",
+            "id": "LC8_L1T_TOA/LC80430332015105LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=bbd4a91a15764ea63c478769e1648634&token=5e599a2f354c772eb21cc211cc936ce4"
+        },
+        {
+            "date": "2015-10-08T18:39:31",
+            "id": "LC8_L1T_TOA/LC80430332015281LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=713e3cd6dba123d0b1aa7975ac077ea0&token=a1c8e6b82a38b2885a09ab6767e81c7c"
+        },
+        {
+            "date": "2016-01-12T18:39:34",
+            "id": "LC8_L1T_TOA/LC80430332016012LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=f2c0c1b98828df99020e7e685eac8141&token=c497343b8682326908f66ef93f5a040e"
+        },
+        {
+            "date": "2016-02-13T18:39:27",
+            "id": "LC8_L1T_TOA/LC80430332016044LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=4c5cd86630aab7e10dd9d2884a57861b&token=ff5bf2e0a9e2c7b79130f3d9db3543c0"
+        },
+        {
+            "date": "2016-02-29T18:39:23",
+            "id": "LC8_L1T_TOA/LC80430332016060LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=f6e5911bc73d27072b6421cdb2b77f9b&token=00ed607d02e62f076f7dc96c8bc779e0"
+        },
+        {
+            "date": "2016-03-16T18:39:19",
+            "id": "LC8_L1T_TOA/LC80430332016076LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=981a204b1027ae4ea507094383cfc0d3&token=d95b9e51dfee1346c04eaadd3f34cb47"
+        },
+        {
+            "date": "2016-04-01T18:39:09",
+            "id": "LC8_L1T_TOA/LC80430332016092LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=0256d8c762164d523a9acf912879e483&token=1f5a6c920cfd6216379ed458da6cff67"
+        },
+        {
+            "date": "2016-04-17T18:39:04",
+            "id": "LC8_L1T_TOA/LC80430332016108LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=09c593056d4f1963ce88001a2f9daaf1&token=5c24ed1dd18326cdf53ecbf525a1b0bf"
+        },
+        {
+            "date": "2016-05-19T18:39:05",
+            "id": "LC8_L1T_TOA/LC80430332016140LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=3c71ddbd6b0159431d117d817c42c3bc&token=e79209f51b43445d287316f1d22382c8"
+        },
+        {
+            "date": "2016-10-10T18:39:48",
+            "id": "LC8_L1T_TOA/LC80430332016284LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=85621428ac9484451b95d6fe9a8f476d&token=4ff9c20263e7560df3477c570cea416f"
+        },
+        {
+            "date": "2016-10-26T18:39:51",
+            "id": "LC8_L1T_TOA/LC80430332016300LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=ea5bf42999460efff9b3dd82fcc9ddec&token=f7971d81e7420f50c3ef85e91f8d46ff"
+        },
+        {
+            "date": "2016-11-11T18:39:49",
+            "id": "LC8_L1T_TOA/LC80430332016316LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=90bac8ba0219344c7c99e1f2a44d6fbc&token=1ab971f2e6f47cb0680c2acf9081a02b"
+        },
+        {
+            "date": "2016-12-29T18:39:43",
+            "id": "LC8_L1T_TOA/LC80430332016364LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=39e58448031787e5580a065cb3a54f1c&token=b294f31d53d7e20b12b3088d5a9d7d12"
+        },
+        {
+            "date": "2017-01-14T18:39:39",
+            "id": "LC8_L1T_TOA/LC80430332017014LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=dc77b62eac035f940b71200ea1f5aff7&token=832a616ebb96b1293f63b45a7a6aaf6f"
+        },
+        {
+            "date": "2017-04-04T18:39:03",
+            "id": "LC8_L1T_TOA/LC80430332017094LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=07ae4831d2d9ab26d01606bcdaceff1b&token=f7e6c69a47ed389bc58acf6533f428cc"
+        },
+        {
+            "date": "2017-04-20T18:38:53",
+            "id": "LC8_L1T_TOA/LC80430332017110LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=0423aefdfb14fd7a330dc814d0816bff&token=93a248afe08781dbcab253b6c5a72078"
+        },
+        {
+            "date": "2013-04-25T18:41:39",
+            "id": "LC8_L1T_TOA/LC80430342013115LGN02",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=c6932b534300261b06a4d3a9e76f6ee4&token=56c510e02a21a0806721d648a2a81c12"
+        },
+        {
+            "date": "2013-12-05T18:41:31",
+            "id": "LC8_L1T_TOA/LC80430342013339LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=46770bab3dcb875e3552937d8f52cfcb&token=f858baedd40362acb7969c19d7de8319"
+        },
+        {
+            "date": "2013-12-21T18:41:21",
+            "id": "LC8_L1T_TOA/LC80430342013355LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=63cb33fdd6c12e893876a779df1d1327&token=73ead69aff37b0d12fe3191dc17f3870"
+        },
+        {
+            "date": "2014-01-06T18:41:13",
+            "id": "LC8_L1T_TOA/LC80430342014006LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=b23349a52ea54ddc41786ec9fbc9fcc3&token=fa8820b58090ee79d54550b5a50bb4f3"
+        },
+        {
+            "date": "2014-01-22T18:41:02",
+            "id": "LC8_L1T_TOA/LC80430342014022LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=c1dcec0ed866ba75d4e3b2e058217af7&token=ec882a615bf9e0dda36a4d377a63c5f0"
+        },
+        {
+            "date": "2014-02-23T18:40:38",
+            "id": "LC8_L1T_TOA/LC80430342014054LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=903e7dac1f4f0fc428be6e54205fb783&token=1b50f520e2f24808c77a1746d9dd4ecc"
+        },
+        {
+            "date": "2014-03-11T18:40:26",
+            "id": "LC8_L1T_TOA/LC80430342014070LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=a23fd95c7a00c4db68199cb5504ac66a&token=f97e28eccc785001fbc10a74f93ed16e"
+        },
+        {
+            "date": "2014-04-12T18:39:55",
+            "id": "LC8_L1T_TOA/LC80430342014102LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=4e2986756c44e0b4d84030714b9fa533&token=f767be8af323b976cdae1e82e47567d8"
+        },
+        {
+            "date": "2014-04-28T18:39:40",
+            "id": "LC8_L1T_TOA/LC80430342014118LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=ad34e6232ca27dff85bb39106f800fd7&token=360b890d258e3cdaa55e840838c5e8c8"
+        },
+        {
+            "date": "2014-10-21T18:40:07",
+            "id": "LC8_L1T_TOA/LC80430342014294LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=c0120ddb60ac9c17d61a4bc481ccde6f&token=5ce04e0dfae541a6269f55f29eca4b9e"
+        },
+        {
+            "date": "2014-12-08T18:40:01",
+            "id": "LC8_L1T_TOA/LC80430342014342LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=f9a26880f60943c397543f074c03de48&token=b4b677fd621d8f2b837eaa85e3e129ab"
+        },
+        {
+            "date": "2015-01-25T18:39:50",
+            "id": "LC8_L1T_TOA/LC80430342015025LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=1fa349cfc1577b9c7f7785636672b7bd&token=a5e9ba0e0902305db31736bea4e762a0"
+        },
+        {
+            "date": "2015-02-26T18:39:41",
+            "id": "LC8_L1T_TOA/LC80430342015057LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=16a07bfcce56438bacb9c96d25ac4e4d&token=607a4c118d23ff2bf454018f156d0ec8"
+        },
+        {
+            "date": "2015-03-14T18:39:29",
+            "id": "LC8_L1T_TOA/LC80430342015073LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=4f3682d7cab9400cba268f1b300a0bb9&token=63e6559929e50156e8825ca299910bae"
+        },
+        {
+            "date": "2015-03-30T18:39:20",
+            "id": "LC8_L1T_TOA/LC80430342015089LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=3bb29697f92876f8ac2a74da576e04bf&token=703c5c37fbe4cac85c332b4c1dc7dc77"
+        },
+        {
+            "date": "2015-04-15T18:39:17",
+            "id": "LC8_L1T_TOA/LC80430342015105LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=bbd4a91a15764ea63c478769e1648634&token=2070540888a312ab49b214b4338be3f1"
+        },
+        {
+            "date": "2015-10-08T18:39:54",
+            "id": "LC8_L1T_TOA/LC80430342015281LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=713e3cd6dba123d0b1aa7975ac077ea0&token=d2de45ae267318503284acb0d30707bb"
+        },
+        {
+            "date": "2016-01-12T18:39:58",
+            "id": "LC8_L1T_TOA/LC80430342016012LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=f2c0c1b98828df99020e7e685eac8141&token=26d575a43575c2baae6ada6a071700bd"
+        },
+        {
+            "date": "2016-02-13T18:39:50",
+            "id": "LC8_L1T_TOA/LC80430342016044LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=4c5cd86630aab7e10dd9d2884a57861b&token=9b582e0eab3fe5318b32b7fee5852732"
+        },
+        {
+            "date": "2016-02-29T18:39:47",
+            "id": "LC8_L1T_TOA/LC80430342016060LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=f6e5911bc73d27072b6421cdb2b77f9b&token=3c4dd4e3b0766cd50722981340e1b974"
+        },
+        {
+            "date": "2016-03-16T18:39:43",
+            "id": "LC8_L1T_TOA/LC80430342016076LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=981a204b1027ae4ea507094383cfc0d3&token=fc2632f80554c4712e803b8f878fc9f0"
+        },
+        {
+            "date": "2016-04-01T18:39:32",
+            "id": "LC8_L1T_TOA/LC80430342016092LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=0256d8c762164d523a9acf912879e483&token=0cbcad599440738e9df2120b46d298d5"
+        },
+        {
+            "date": "2016-04-17T18:39:27",
+            "id": "LC8_L1T_TOA/LC80430342016108LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=09c593056d4f1963ce88001a2f9daaf1&token=e0dca2c122b4ebcabd9116bf3ed414c8"
+        },
+        {
+            "date": "2016-05-19T18:39:29",
+            "id": "LC8_L1T_TOA/LC80430342016140LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=3c71ddbd6b0159431d117d817c42c3bc&token=e5fbb194ba51299f600be9debc808776"
+        },
+        {
+            "date": "2016-10-10T18:40:12",
+            "id": "LC8_L1T_TOA/LC80430342016284LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=85621428ac9484451b95d6fe9a8f476d&token=c4f0c723871176ee80490a4f28b2983c"
+        },
+        {
+            "date": "2016-10-26T18:40:14",
+            "id": "LC8_L1T_TOA/LC80430342016300LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=ea5bf42999460efff9b3dd82fcc9ddec&token=53bf3dae0f1b3e342c4b46a5ed2dddba"
+        },
+        {
+            "date": "2016-11-11T18:40:13",
+            "id": "LC8_L1T_TOA/LC80430342016316LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=90bac8ba0219344c7c99e1f2a44d6fbc&token=b991ca0c2166c5ce26aa1ac275824311"
+        },
+        {
+            "date": "2016-12-29T18:40:07",
+            "id": "LC8_L1T_TOA/LC80430342016364LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=39e58448031787e5580a065cb3a54f1c&token=f64695c6c4c1aff38b65511c56e174ca"
+        },
+        {
+            "date": "2017-01-14T18:40:03",
+            "id": "LC8_L1T_TOA/LC80430342017014LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=dc77b62eac035f940b71200ea1f5aff7&token=a9f457748d549099b5625b4547a92aa1"
+        },
+        {
+            "date": "2017-04-04T18:39:26",
+            "id": "LC8_L1T_TOA/LC80430342017094LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=07ae4831d2d9ab26d01606bcdaceff1b&token=0583e725b6f7b9d0f2ddcde1f687dad4"
+        },
+        {
+            "date": "2017-04-20T18:39:17",
+            "id": "LC8_L1T_TOA/LC80430342017110LGN00",
+            "url": "https://earthengine.googleapis.com/api/thumb?thumbid=0423aefdfb14fd7a330dc814d0816bff&token=e13791b7ade8be6b4b9ddfd6e1823d33"
+        }
+    ]
+}
