@@ -1,5 +1,6 @@
 import json
 import time
+import random
 import pprint
 import telepot
 import requests
@@ -17,6 +18,9 @@ os.environ.setdefault(
     'NASA_API_KEY',
     'xkPcYAoU93O1PeqPrKXyjpGChT1FkQ8TjA7Neg7V',
 )
+
+
+DATA = None
 
 
 class Size(NamedTuple):
@@ -177,10 +181,8 @@ class LandsatBisector:
                 # with open('data.json', 'w') as outfile:
                 #     json.dump(data, outfile, indent=4)
 
-        print(f'Length of array: {len(out)}')
-        for item in out:
-            pprint.pprint(f'URL: {item.image.url}')
-        t = input()
+        # print(f'Length of array: {len(out)}')
+
         return out
 
     # def blit(self, disp):
@@ -203,6 +205,27 @@ def confirm(title):
     }])['confirm']
 
 
+# class RandomAsset:
+#
+#     def __init__(self):
+#         self.asset = self.get_random_asset()
+#
+#     @property
+#     def asset(self):
+#         return self.asset
+#
+#     @asset.setter
+#     def asset(self, value):
+#         self.asset = value
+#
+#     def get_random_asset(self):
+#
+        # random_value = random.randint(0, len(DATA) - 1)
+        # print(f'Random value: {random_value}')
+        # test = DATA[random_value]
+#         return test
+
+
 def handle(msg):
     """
     Check the input of the user to redirect it in the correct part of the game
@@ -216,10 +239,19 @@ def handle(msg):
     # you can add more content type, like if someone send a picture
     if content_type == 'text':
         if msg['text'] == '/start':
-            bot.sendMessage(chat_id, 'https://earthengine.googleapis.com/api/thumb?thumbid=c6932b534300261b06a4d3a9e76f6ee4&token=86c9866ec4827f2eec9504b7a8414f39')
+            random_value = random.randint(0, len(DATA) - 1)
+            print(f'Random value: {random_value}')
+            test = DATA[random_value]
+            pprint.pprint(test)
+            message = '? ' + test.asset.date + ' - do you see it ? '
+            bot.sendMessage(chat_id, test.image.url)
+            bot.sendMessage(chat_id, message)
+    else:
+        raise ValueError('Nothing except text is allowed for now !')
 
 
 def main(bot):
+    global DATA
     """
     Runs a bisection algorithm on a series of Landsat pictures in order
     for the user to find the approximate date of the fire.
@@ -231,15 +263,11 @@ def main(bot):
     # pygame.init()
 
     bisector = LandsatBisector(LON, LAT)
-    test = bisector.shots
-    babare = test[0].image.url
-    pprint.pprint(babare)
+    DATA = bisector.shots
 
     # disp = pygame.display.set_mode(DISPLAY_SIZE)
 
-    bot.message_loop(handle)
-
-    t = input()
+    bot.message_loop(handle, run_forever=True)
 
     def mapper(n):
         """
@@ -267,8 +295,8 @@ def main(bot):
     #
     # print(f"Found! First apparition = {bisector.date}")
     #
-    pygame.quit()
-    exit()
+    # pygame.quit()
+    # exit()
 
 
 def fetch_conf():
@@ -281,22 +309,17 @@ def fetch_conf():
     return data["bot_token"]
 
 
-def fetch_assets():
-    with open('data.json') as json_data_file:
-        data = json.load(json_data_file)
-    return data["shots"]
+# def fetch_assets():
+#     with open('data.json') as json_data_file:
+#         data = json.load(json_data_file)
+#     return data["shots"]
 
 
 if __name__ == '__main__':
     bot_token = fetch_conf()
     bot = telepot.Bot(bot_token)
 
-    test = fetch_assets()
-    pprint.pprint(len(test))
-    t = input()
+    # DATA = fetch_assets()
+    # pprint.pprint(len(DATA))
 
     main(bot)
-
-    print('Listening ...')
-    while True:
-        time.sleep(1)
