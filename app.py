@@ -21,6 +21,8 @@ os.environ.setdefault(
 
 
 DATA = None
+SUB_BOUND = None
+SUP_BOUND = None
 
 
 class Size(NamedTuple):
@@ -164,24 +166,12 @@ class LandsatBisector:
 
         assets = earth.assets(lat=self.lat, lon=self.lon, begin=begin, end=end)
 
-        # data = {}
-        # data['shots'] = []
-
         out = []
 
         for asset in tqdm(assets):
             img = asset.get_asset_image(cloud_score=True)
             if (img.cloud_score or 1.0) <= MAX_CLOUD_SCORE:
                 out.append(Shot(asset, img))
-                # data['shots'].append({
-                #     'date': asset.date,
-                #     'id': asset.id,
-                #     'url': img.url
-                # })
-                # with open('data.json', 'w') as outfile:
-                #     json.dump(data, outfile, indent=4)
-
-        # print(f'Length of array: {len(out)}')
 
         return out
 
@@ -205,28 +195,47 @@ def confirm(title):
     }])['confirm']
 
 
-# class RandomAsset:
-#
-#     def __init__(self):
-#         self.asset = self.get_random_asset()
-#
-#     @property
-#     def asset(self):
-#         return self.asset
-#
-#     @asset.setter
-#     def asset(self, value):
-#         self.asset = value
-#
-#     def get_random_asset(self):
-#
-        # random_value = random.randint(0, len(DATA) - 1)
-        # print(f'Random value: {random_value}')
-        # test = DATA[random_value]
-#         return test
+def setup_bounds():
+    global SUB_BOUND, SUP_BOUND, DATA
+
+    SUB_BOUND = 0
+    SUP_BOUND = len(DATA)
+    mid = int((SUB_BOUND + SUP_BOUND) / 2)
+
+    print(f'SUB_BOUND: {SUB_BOUND}')
+    print(f'SUP_BOUND: {SUP_BOUND}')
+    print(f'mid: {mid}')
+
+    return mid
+
+
+def bob(value):
+    global SUB_BOUND, SUP_BOUND, DATA
+    mid, left, right, end = None, None, None, False
+    print(value)
+    print(f'SUB_BOUND: {SUB_BOUND}')
+    print(f'SUP_BOUND: {SUP_BOUND}')
+
+    if SUB_BOUND + 1 < SUP_BOUND:
+        mid = int((SUB_BOUND + SUP_BOUND) / 2)
+
+        print(f'mid: {mid}')
+
+        if value:
+            SUP_BOUND = mid
+        else:
+            SUB_BOUND = mid
+    else:
+        end = True
+
+    print(f'NEW SUB_BOUND: {SUB_BOUND}')
+    print(f'NEW SUP_BOUND: {SUP_BOUND}')
+
+    return mid, end
 
 
 def handle(msg):
+    global SUB_BOUND, SUP_BOUND
     """
     Check the input of the user to redirect it in the correct part of the game
     :param msg: input from the user
@@ -237,15 +246,39 @@ def handle(msg):
     content_type, chat_type, chat_id = telepot.glance(msg)
     print(f'Content type: {content_type} || chat type: {chat_type} || chat id: {chat_id}')
     # you can add more content type, like if someone send a picture
+
     if content_type == 'text':
+        msg.get("text").lower()
+
         if msg['text'] == '/start':
-            random_value = random.randint(0, len(DATA) - 1)
-            print(f'Random value: {random_value}')
-            test = DATA[random_value]
-            pprint.pprint(test)
-            message = '? ' + test.asset.date + ' - do you see it ? '
-            bot.sendMessage(chat_id, test.image.url)
+
+            mid = setup_bounds()
+            message = '? ' + DATA[mid].asset.date + ' - do you see it ? '
+            bot.sendMessage(chat_id, DATA[mid].image.url)
             bot.sendMessage(chat_id, message)
+
+        elif msg['text'] == 'yes':
+
+            mid, end = bob(value=True)
+            if end:
+                message = 'Potential date of starting => ' + DATA[SUB_BOUND].asset.date
+                bot.sendMessage(chat_id, message)
+            else:
+                message = '? ' + DATA[mid].asset.date + ' - do you see it ? '
+                bot.sendMessage(chat_id, DATA[mid].image.url)
+                bot.sendMessage(chat_id, message)
+
+        elif msg['text'] == 'no':
+
+            mid, end = bob(value=False)
+            if end:
+                message = 'Potential date of starting => ' + DATA[SUB_BOUND].asset.date
+                bot.sendMessage(chat_id, message)
+            else:
+                message = '? ' + DATA[mid].asset.date + ' - do you see it ? '
+                bot.sendMessage(chat_id, DATA[mid].image.url)
+                bot.sendMessage(chat_id, message)
+
     else:
         raise ValueError('Nothing except text is allowed for now !')
 
@@ -264,7 +297,6 @@ def main(bot):
 
     bisector = LandsatBisector(LON, LAT)
     DATA = bisector.shots
-
     # disp = pygame.display.set_mode(DISPLAY_SIZE)
 
     bot.message_loop(handle, run_forever=True)
