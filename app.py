@@ -6,17 +6,12 @@ from typing import NamedTuple, Any
 from tqdm import tqdm
 import pendulum
 import os
-from telepot.namedtuple import InlineKeyboardButton, KeyboardButton, ReplyKeyboardRemove
-
 
 os.environ.setdefault(
     'NASA_API_KEY',
     # 'xkPcYAoU93O1PeqPrKXyjpGChT1FkQ8TjA7Neg7V',
     'xuOXLGNmyk4SPgtz4nIDaTQHcXo6la0PQpMoW8QM',
 )
-
-
-# DATA = None  # Storage of shots to access them easily
 
 
 class Bound:
@@ -133,7 +128,6 @@ class LandsatBisector:
         return out
 
 
-# TODO integrate unit test at least for this function
 def update_bounds(value):
 
     """
@@ -149,6 +143,7 @@ def update_bounds(value):
 
     if bound.sub_bound + 1 < bound.sup_bound:
 
+        # Check if only 3 values from the interval remain
         if bound.sub_bound + 2 == bound.sup_bound:
             end = True
             return mid, end
@@ -162,6 +157,7 @@ def update_bounds(value):
         else:
             bound.set_sub(mid)
 
+        # update the new mid value to display correct image
         mid = int((bound.sub_bound + bound.sup_bound) / 2)
 
     return mid, end
@@ -182,14 +178,14 @@ def handle(msg):
 
         user_input = msg.get("text").lower()  # transform message input to non case sensitive input
 
-        if user_input == '/start':
+        if user_input == 'hello':
 
             bot.sendMessage(chat_id, "Hello, I'm a bot. "
                                      "You're here to help me to find when a wild fire started. "
                                      "Look at these images and tell me if you see burnt land."
                                      "To begin enter /begin .")
 
-        elif user_input == '/start':
+        elif user_input == '/begin':
 
             mid = int((bound.sub_bound + bound.sup_bound) / 2)
             message = '? ' + DATA[mid].asset.date + ' - do you see it ? '
@@ -239,9 +235,9 @@ if __name__ == '__main__':
     bot_token = fetch_conf()
     bot = telepot.Bot(bot_token)
 
-    # bisector = LandsatBisector(LON, LAT)
-    # DATA = bisector.shots
-    DATA = []
+    bisector = LandsatBisector(LON, LAT)
+    DATA = bisector.shots
+
     bound = Bound(0, len(DATA)-1)  # Instantiate class to update the bisection process
 
     bot.message_loop(handle, run_forever=True)
