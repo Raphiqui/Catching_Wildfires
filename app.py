@@ -141,28 +141,27 @@ def update_bounds(value):
     :return: integer, boolean as the new mid value and if the bisection process can't go further
     """
 
-    # global DATA
     mid, end = None, False
 
     print(f'SUB_BOUND: {bound.sub_bound}')
     print(f'SUP_BOUND: {bound.sup_bound}')
 
     if bound.sub_bound + 1 < bound.sup_bound:
+
+        if bound.sub_bound + 2 == bound.sup_bound:
+            end = True
+            return mid, end
+
         mid = int((bound.sub_bound + bound.sup_bound) / 2)
 
-        print(f'mid: {mid}')
+        print(f'MID: {mid}')
 
-        if value is True:
-            print('TRUE VALUE')
+        if value:
             bound.set_sup(mid)
-        elif value is False:
-            print('FALSE VALUE')
-            bound.set_sub(mid)
         else:
-            print('NONE VALUE')
-            return mid, end
-    else:
-        end = True
+            bound.set_sub(mid)
+
+        mid = int((bound.sub_bound + bound.sup_bound) / 2)
 
     return mid, end
 
@@ -175,9 +174,6 @@ def handle(msg):
     :return: string as message to display to the user with some customization
     """
 
-    print(f'Message: {msg}')
-    # global DATA
-
     content_type, chat_type, chat_id = telepot.glance(msg)
     print(f'Content type: {content_type} || chat type: {chat_type} || chat id: {chat_id}')
 
@@ -187,13 +183,12 @@ def handle(msg):
 
         if user_input == '/start':
 
-            mid, end = update_bounds(value=None)
+            mid = int((bound.sub_bound + bound.sup_bound) / 2)
             message = '? ' + DATA[mid].asset.date + ' - do you see it ? '
             bot.sendMessage(chat_id, DATA[mid].image.url)
             bot.sendMessage(chat_id, message)
 
         elif user_input == 'yes':
-            print('INTO YES')
             mid, end = update_bounds(value=True)
             if end:
                 message = 'Potential date of starting => ' + DATA[bound.sup_bound].asset.date
@@ -204,7 +199,6 @@ def handle(msg):
                 bot.sendMessage(chat_id, message)
 
         elif user_input == 'no':
-            print('INTO NO')
             mid, end = update_bounds(value=False)
             if end:
                 message = 'Potential date of starting => ' + DATA[bound.sup_bound].asset.date
