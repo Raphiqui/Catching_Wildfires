@@ -3,6 +3,7 @@ import time
 import random
 import pprint
 import telepot
+from telepot.loop import MessageLoop
 import requests
 from telepot.namedtuple import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
 from nasa import earth
@@ -20,50 +21,27 @@ os.environ.setdefault(
 
 
 DATA = None
-SUB_BOUND = None
-SUP_BOUND = None
-
-
-class Size(NamedTuple):
-    """
-    Represents a size
-    """
-
-    width: int
-    height: int
 
 
 class Bound:
 
-    def __init__(self):
-        self._sub_bound = None
-        self._sup_bound = None
+    def __init__(self, sub_bound, sup_bound):
+        self._sub_bound = sub_bound
+        self._sup_bound = sup_bound
 
     @property
     def sub_bound(self):
-        return self.sub_bound
+        return self._sub_bound
 
     @property
     def sup_bound(self):
-        return self.sup_bound
+        return self._sup_bound
 
-    @sub_bound.setter
-    def sub_bound(self, value):
+    def set_sub(self, value):
         self._sub_bound = value
 
-    @sup_bound.setter
-    def sup_bound(self, value):
+    def set_sup(self, value):
         self._sup_bound = value
-
-
-class Color(NamedTuple):
-    """
-    8-bit components of a color
-    """
-
-    r: int
-    g: int
-    b: int
 
 
 class Shot(NamedTuple):
@@ -76,8 +54,6 @@ class Shot(NamedTuple):
     image: Any
 
 
-DISPLAY_SIZE = Size(512, 512)
-BLACK = Color(0, 0, 0)
 MAX_CLOUD_SCORE = 0.5
 
 LON = -120.70418
@@ -173,33 +149,35 @@ def setup_bounds():
     return mid
 
 
-def bob(value):
-    global SUB_BOUND, SUP_BOUND, DATA
-    mid, left, right, end = None, None, None, False
+def bob(bound, value):
+    global DATA
+    mid, end = None, False
     print(value)
-    print(f'SUB_BOUND: {SUB_BOUND}')
-    print(f'SUP_BOUND: {SUP_BOUND}')
+    print(f'SUB_BOUND: {bound.sub_bound}')
+    print(f'SUP_BOUND: {bound.sup_bound}')
 
-    if SUB_BOUND + 1 < SUP_BOUND:
-        mid = int((SUB_BOUND + SUP_BOUND) / 2)
+    if bound.sub_bound + 1 < bound.sup_bound:
+        mid = int((bound.sub_bound + bound.sup_bound) / 2)
 
         print(f'mid: {mid}')
 
         if value:
-            SUP_BOUND = mid
+            bound.set_sup(mid)
         else:
-            SUB_BOUND = mid
+            bound.set_sub(mid)
     else:
         end = True
 
-    print(f'NEW SUB_BOUND: {SUB_BOUND}')
-    print(f'NEW SUP_BOUND: {SUP_BOUND}')
+    print(f'NEW SUB_BOUND: {bound.sub_bound}')
+    print(f'NEW SUP_BOUND: {bound.sup_bound}')
 
     return mid, end
 
 
 def handle(msg):
-    global SUB_BOUND, SUP_BOUND
+    global DATA
+
+    print(f'Test is an instance of Bound class => sub_bound: {bound.sub_bound} | sup_bound: {bound.sup_bound} ')
 
     content_type, chat_type, chat_id = telepot.glance(msg)
     print(f'Content type: {content_type} || chat type: {chat_type} || chat id: {chat_id}')
@@ -209,14 +187,14 @@ def handle(msg):
 
         if msg['text'] == '/start':
 
-            mid = setup_bounds()
+            mid = int((bound.sub_bound + bound.sup_bound) / 2)
             message = '? ' + DATA[mid].asset.date + ' - do you see it ? '
             bot.sendMessage(chat_id, DATA[mid].image.url)
             bot.sendMessage(chat_id, message)
 
         elif msg['text'] == 'yes':
 
-            mid, end = bob(value=True)
+            mid, end = bob(bound, value=True)
             if end:
                 message = 'Potential date of starting => ' + DATA[SUB_BOUND].asset.date
                 bot.sendMessage(chat_id, message)
@@ -227,7 +205,7 @@ def handle(msg):
 
         elif msg['text'] == 'no':
 
-            mid, end = bob(value=False)
+            mid, end = bob(bound, value=False)
             if end:
                 message = 'Potential date of starting => ' + DATA[SUB_BOUND].asset.date
                 bot.sendMessage(chat_id, message)
@@ -238,15 +216,6 @@ def handle(msg):
 
     else:
         raise ValueError('Nothing except text is allowed for now !')
-
-
-def main(bot):
-    global DATA
-
-    bisector = LandsatBisector(LON, LAT)
-    DATA = bisector.shots
-
-    bot.message_loop(handle, run_forever=True)
 
 
 def fetch_conf():
@@ -263,4 +232,10 @@ if __name__ == '__main__':
     bot_token = fetch_conf()
     bot = telepot.Bot(bot_token)
 
-    main(bot)
+    bisector = LandsatBisector(LON, LAT)
+    DATA = bisector.shots
+
+    bound = Bound(0, len(DATA))
+
+    bot.message_loop(handle, run_forever=True)
+
