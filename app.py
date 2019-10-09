@@ -6,6 +6,7 @@ from typing import NamedTuple, Any
 from tqdm import tqdm
 import pendulum
 import os
+from telepot.namedtuple import InlineKeyboardButton, KeyboardButton, ReplyKeyboardRemove
 
 
 os.environ.setdefault(
@@ -183,8 +184,16 @@ def handle(msg):
 
         if user_input == '/start':
 
+            bot.sendMessage(chat_id, "Hello, I'm a bot. "
+                                     "You're here to help me to find when a wild fire started. "
+                                     "Look at these images and tell me if you see burnt land."
+                                     "To begin enter /begin .")
+
+        elif user_input == '/start':
+
             mid = int((bound.sub_bound + bound.sup_bound) / 2)
             message = '? ' + DATA[mid].asset.date + ' - do you see it ? '
+
             bot.sendMessage(chat_id, DATA[mid].image.url)
             bot.sendMessage(chat_id, message)
 
@@ -207,6 +216,9 @@ def handle(msg):
                 message = '? ' + DATA[mid].asset.date + ' - do you see it ? '
                 bot.sendMessage(chat_id, DATA[mid].image.url)
                 bot.sendMessage(chat_id, message)
+        else:
+            bot.sendMessage(chat_id, 'Sorry I\'m busy, enjoy this instead')
+            bot.sendVideo(chat_id, 'https://media.giphy.com/media/9n5UIlRppk91e/giphy.gif')
 
     else:
         raise ValueError('Nothing except text is allowed for now !')
@@ -227,9 +239,9 @@ if __name__ == '__main__':
     bot_token = fetch_conf()
     bot = telepot.Bot(bot_token)
 
-    bisector = LandsatBisector(LON, LAT)
-    DATA = bisector.shots
-
+    # bisector = LandsatBisector(LON, LAT)
+    # DATA = bisector.shots
+    DATA = []
     bound = Bound(0, len(DATA)-1)  # Instantiate class to update the bisection process
 
     bot.message_loop(handle, run_forever=True)
