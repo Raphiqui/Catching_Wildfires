@@ -145,8 +145,10 @@ def update_bounds(value):
     print(f'SUB_BOUND: {bound.sub_bound}')
     print(f'SUP_BOUND: {bound.sup_bound}')
 
-    if bound.sub_bound + 1 < bound.sup_bound:
-        mid = int((bound.sub_bound + bound.sup_bound) / 2)
+    right = bound.sup_bound - 1
+
+    if bound.sub_bound + 1 < right:
+        mid = int((bound.sub_bound + right) / 2)
 
         print(f'mid: {mid}')
 
