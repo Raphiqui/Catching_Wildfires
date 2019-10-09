@@ -178,11 +178,11 @@ def handle(msg):
 
         user_input = msg.get("text").lower()  # transform message input to non case sensitive input
 
-        if user_input == 'hello':
+        if user_input == '/start':
 
-            bot.sendMessage(chat_id, "Hello, I'm a bot. "
-                                     "You're here to help me to find when a wild fire started. "
-                                     "Look at these images and tell me if you see burnt land."
+            bot.sendMessage(chat_id, "Hello there, I'm a bot. "
+                                     "You're here to help me to find when a wildfire started. "
+                                     "Look at these images and tell me by yes or no if you see burnt land."
                                      "To begin enter /begin .")
 
         elif user_input == '/begin':
