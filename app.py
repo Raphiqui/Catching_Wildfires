@@ -1,16 +1,10 @@
 import json
-import time
-import random
 import pprint
 import telepot
-import requests
-from telepot.namedtuple import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
 from nasa import earth
 from typing import NamedTuple, Any
 from tqdm import tqdm
-from PyInquirer import prompt
 import pendulum
-import pygame
 import os
 
 
@@ -20,28 +14,30 @@ os.environ.setdefault(
 )
 
 
-DATA = None
-SUB_BOUND = None
-SUP_BOUND = None
+DATA = None  # Storage of shots to access them easily
 
 
-class Size(NamedTuple):
+class Bound:
     """
-    Represents a size
+    Represents the value of the array as interval
     """
+    def __init__(self, sub_bound, sup_bound):
+        self._sub_bound = sub_bound
+        self._sup_bound = sup_bound
 
-    width: int
-    height: int
+    @property
+    def sub_bound(self):
+        return self._sub_bound
 
+    @property
+    def sup_bound(self):
+        return self._sup_bound
 
-class Color(NamedTuple):
-    """
-    8-bit components of a color
-    """
+    def set_sub(self, value):
+        self._sub_bound = value
 
-    r: int
-    g: int
-    b: int
+    def set_sup(self, value):
+        self._sup_bound = value
 
 
 class Shot(NamedTuple):
@@ -54,41 +50,10 @@ class Shot(NamedTuple):
     image: Any
 
 
-DISPLAY_SIZE = Size(512, 512)
-BLACK = Color(0, 0, 0)
 MAX_CLOUD_SCORE = 0.5
 
 LON = -120.70418
 LAT = 38.32974
-
-
-def bisect(n, mapper, tester):
-    """
-    Runs a bisection.
-
-    - `n` is the number of elements to be bisected
-    - `mapper` is a callable that will transform an integer from "0" to "n"
-      into a value that can be tested
-    - `tester` returns true if the value is within the "right" range
-    """
-
-    if n < 1:
-        raise ValueError('Cannot bissect an empty array')
-
-    left = 0
-    right = n - 1
-
-    while left + 1 < right:
-        mid = int((left + right) / 2)
-
-        val = mapper(mid)
-
-        if tester(val):
-            right = mid
-        else:
-            left = mid
-
-    return mapper(right)
 
 
 class LandsatImage:
@@ -109,16 +74,6 @@ class LandsatImage:
     def shot(self, value):
         self._shot = value
         self.image = None
-
-    # def blit(self, disp):
-    #     if not self.image:
-    #         img = self.shot.image
-    #         pil_img = img.image
-    #         buf = pil_img.tobytes()
-    #         size = pil_img.width, pil_img.height
-    #         self.image = pygame.image.frombuffer(buf, size, 'RGB')
-    #
-    #     disp.blit(self.image, (0, 0))
 
 
 class LandsatBisector:
@@ -175,104 +130,79 @@ class LandsatBisector:
 
         return out
 
-    # def blit(self, disp):
-    #     """
-    #     Draws the current picture.
-    #     """
-    #
-    #     self.image.blit(disp)
 
+def update_bounds(value):
 
-def confirm(title):
     """
-    Asks a yes/no question to the user
+    Update the bounds according to the user input
+    :param value: boolean as user input Yes/No
+    :return: integer, boolean as the new mid value and if the bisection process can't go further
     """
 
-    return prompt([{
-        'type': 'confirm',
-        'name': 'confirm',
-        'message': f'{title} - do you see it?',
-    }])['confirm']
+    global DATA
+    mid, end = None, False
 
+    print(f'SUB_BOUND: {bound.sub_bound}')
+    print(f'SUP_BOUND: {bound.sup_bound}')
 
-def setup_bounds():
-    global SUB_BOUND, SUP_BOUND, DATA
-
-    SUB_BOUND = 0
-    SUP_BOUND = len(DATA)
-    mid = int((SUB_BOUND + SUP_BOUND) / 2)
-
-    print(f'SUB_BOUND: {SUB_BOUND}')
-    print(f'SUP_BOUND: {SUP_BOUND}')
-    print(f'mid: {mid}')
-
-    return mid
-
-
-def bob(value):
-    global SUB_BOUND, SUP_BOUND, DATA
-    mid, left, right, end = None, None, None, False
-    print(value)
-    print(f'SUB_BOUND: {SUB_BOUND}')
-    print(f'SUP_BOUND: {SUP_BOUND}')
-
-    if SUB_BOUND + 1 < SUP_BOUND:
-        mid = int((SUB_BOUND + SUP_BOUND) / 2)
+    if bound.sub_bound + 1 < bound.sup_bound:
+        mid = int((bound.sub_bound + bound.sup_bound) / 2)
 
         print(f'mid: {mid}')
 
         if value:
-            SUP_BOUND = mid
+            bound.set_sup(mid)
         else:
-            SUB_BOUND = mid
+            bound.set_sub(mid)
     else:
         end = True
 
-    print(f'NEW SUB_BOUND: {SUB_BOUND}')
-    print(f'NEW SUP_BOUND: {SUP_BOUND}')
+    print(f'NEW SUB_BOUND: {bound.sub_bound}')
+    print(f'NEW SUP_BOUND: {bound.sup_bound}')
 
     return mid, end
 
 
 def handle(msg):
-    global SUB_BOUND, SUP_BOUND
+
     """
-    Check the input of the user to redirect it in the correct part of the game
+    Check the input of the user to redirect it in the correct way
     :param msg: input from the user
-    :return: string ad message to display to the user with some customization
+    :return: string as message to display to the user with some customization
     """
-    # Receive message and pass the command to call the corresponding func
+
+    global DATA
 
     content_type, chat_type, chat_id = telepot.glance(msg)
     print(f'Content type: {content_type} || chat type: {chat_type} || chat id: {chat_id}')
-    # you can add more content type, like if someone send a picture
 
     if content_type == 'text':
-        msg.get("text").lower()
 
-        if msg['text'] == '/start':
+        user_input = msg.get("text").lower()  # transform message input to non case sensitive input
 
-            mid = setup_bounds()
+        if user_input == '/start':
+
+            mid = int((bound.sub_bound + bound.sup_bound) / 2)
             message = '? ' + DATA[mid].asset.date + ' - do you see it ? '
             bot.sendMessage(chat_id, DATA[mid].image.url)
             bot.sendMessage(chat_id, message)
 
-        elif msg['text'] == 'yes':
+        elif user_input == 'yes':
 
-            mid, end = bob(value=True)
+            mid, end = update_bounds(value=True)
             if end:
-                message = 'Potential date of starting => ' + DATA[SUB_BOUND].asset.date
+                message = 'Potential date of starting => ' + DATA[bound.sub_bound].asset.date
                 bot.sendMessage(chat_id, message)
             else:
                 message = '? ' + DATA[mid].asset.date + ' - do you see it ? '
                 bot.sendMessage(chat_id, DATA[mid].image.url)
                 bot.sendMessage(chat_id, message)
 
-        elif msg['text'] == 'no':
+        elif user_input == 'no':
 
-            mid, end = bob(value=False)
+            mid, end = update_bounds(value=False)
             if end:
-                message = 'Potential date of starting => ' + DATA[SUB_BOUND].asset.date
+                message = 'Potential date of starting => ' + DATA[bound.sub_bound].asset.date
                 bot.sendMessage(chat_id, message)
             else:
                 message = '? ' + DATA[mid].asset.date + ' - do you see it ? '
@@ -281,54 +211,6 @@ def handle(msg):
 
     else:
         raise ValueError('Nothing except text is allowed for now !')
-
-
-def main(bot):
-    global DATA
-    """
-    Runs a bisection algorithm on a series of Landsat pictures in order
-    for the user to find the approximate date of the fire.
-
-    Images are displayed using pygame, but the interactivity happens in
-    the terminal as it is much easier to do.
-    """
-
-    # pygame.init()
-
-    bisector = LandsatBisector(LON, LAT)
-    DATA = bisector.shots
-    # disp = pygame.display.set_mode(DISPLAY_SIZE)
-
-    bot.message_loop(handle, run_forever=True)
-
-    def mapper(n):
-        """
-        In that case there is no need to map (or rather, the mapping
-        is done visually by the user)
-        """
-
-        return n
-
-    def tester(n):
-        """
-        Displays the current candidate to the user and asks them to
-        check if they see wildfire damages.
-        """
-
-        bisector.index = n
-        disp.fill(BLACK)
-        bisector.blit(disp)
-        # pygame.display.update()
-
-        return confirm(bisector.date)
-
-    # culprit = bisect(bisector.count, mapper, tester)
-    # bisector.index = culprit
-    #
-    # print(f"Found! First apparition = {bisector.date}")
-    #
-    # pygame.quit()
-    # exit()
 
 
 def fetch_conf():
@@ -341,17 +223,15 @@ def fetch_conf():
     return data["bot_token"]
 
 
-# def fetch_assets():
-#     with open('data.json') as json_data_file:
-#         data = json.load(json_data_file)
-#     return data["shots"]
-
-
 if __name__ == '__main__':
+
     bot_token = fetch_conf()
     bot = telepot.Bot(bot_token)
 
-    # DATA = fetch_assets()
-    # pprint.pprint(len(DATA))
+    bisector = LandsatBisector(LON, LAT)
+    DATA = bisector.shots
 
-    main(bot)
+    bound = Bound(0, len(DATA))  # Instantiate class to update the bisection process
+
+    bot.message_loop(handle, run_forever=True)
+
