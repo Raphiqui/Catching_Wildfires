@@ -130,20 +130,6 @@ class LandsatBisector:
         return out
 
 
-def setup_bounds():
-    global SUB_BOUND, SUP_BOUND, DATA
-
-    SUB_BOUND = 0
-    SUP_BOUND = len(DATA)
-    mid = int((SUB_BOUND + SUP_BOUND) / 2)
-
-    print(f'SUB_BOUND: {SUB_BOUND}')
-    print(f'SUP_BOUND: {SUP_BOUND}')
-    print(f'mid: {mid}')
-
-    return mid
-
-
 def bob(value):
     global DATA
     mid, end = None, False
@@ -171,8 +157,6 @@ def bob(value):
 
 def handle(msg):
     global DATA
-
-    print(f'Test is an instance of Bound class => sub_bound: {bound.sub_bound} | sup_bound: {bound.sup_bound} ')
 
     content_type, chat_type, chat_id = telepot.glance(msg)
     print(f'Content type: {content_type} || chat type: {chat_type} || chat id: {chat_id}')
