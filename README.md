@@ -20,3 +20,7 @@ To start the program use the following command
 ```
 python app.py
 ```
+To access to the bot interface using telegram app, use this url into your browser
+```
+https://telegram.me/WildyXbot
+```
