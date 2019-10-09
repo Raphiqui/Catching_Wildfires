@@ -7,14 +7,11 @@ from tqdm import tqdm
 import pendulum
 import os
 
-
 os.environ.setdefault(
     'NASA_API_KEY',
-    'xkPcYAoU93O1PeqPrKXyjpGChT1FkQ8TjA7Neg7V',
+    # 'xkPcYAoU93O1PeqPrKXyjpGChT1FkQ8TjA7Neg7V',
+    'xuOXLGNmyk4SPgtz4nIDaTQHcXo6la0PQpMoW8QM',
 )
-
-
-DATA = None  # Storage of shots to access them easily
 
 
 class Bound:
@@ -139,26 +136,29 @@ def update_bounds(value):
     :return: integer, boolean as the new mid value and if the bisection process can't go further
     """
 
-    global DATA
     mid, end = None, False
 
     print(f'SUB_BOUND: {bound.sub_bound}')
     print(f'SUP_BOUND: {bound.sup_bound}')
 
     if bound.sub_bound + 1 < bound.sup_bound:
+
+        # Check if only 3 values from the interval remain
+        if bound.sub_bound + 2 == bound.sup_bound:
+            end = True
+            return mid, end
+
         mid = int((bound.sub_bound + bound.sup_bound) / 2)
 
-        print(f'mid: {mid}')
+        print(f'MID: {mid}')
 
         if value:
             bound.set_sup(mid)
         else:
             bound.set_sub(mid)
-    else:
-        end = True
 
-    print(f'NEW SUB_BOUND: {bound.sub_bound}')
-    print(f'NEW SUP_BOUND: {bound.sup_bound}')
+        # update the new mid value to display correct image
+        mid = int((bound.sub_bound + bound.sup_bound) / 2)
 
     return mid, end
 
@@ -171,8 +171,6 @@ def handle(msg):
     :return: string as message to display to the user with some customization
     """
 
-    global DATA
-
     content_type, chat_type, chat_id = telepot.glance(msg)
     print(f'Content type: {content_type} || chat type: {chat_type} || chat id: {chat_id}')
 
@@ -180,18 +178,25 @@ def handle(msg):
 
         user_input = msg.get("text").lower()  # transform message input to non case sensitive input
 
-        if user_input == '/start':
+        if user_input == 'hello':
+
+            bot.sendMessage(chat_id, "Hello, I'm a bot. "
+                                     "You're here to help me to find when a wild fire started. "
+                                     "Look at these images and tell me if you see burnt land."
+                                     "To begin enter /begin .")
+
+        elif user_input == '/begin':
 
             mid = int((bound.sub_bound + bound.sup_bound) / 2)
             message = '? ' + DATA[mid].asset.date + ' - do you see it ? '
+
             bot.sendMessage(chat_id, DATA[mid].image.url)
             bot.sendMessage(chat_id, message)
 
         elif user_input == 'yes':
-
             mid, end = update_bounds(value=True)
             if end:
-                message = 'Potential date of starting => ' + DATA[bound.sub_bound].asset.date
+                message = 'Potential date of starting => ' + DATA[bound.sup_bound].asset.date
                 bot.sendMessage(chat_id, message)
             else:
                 message = '? ' + DATA[mid].asset.date + ' - do you see it ? '
@@ -199,15 +204,17 @@ def handle(msg):
                 bot.sendMessage(chat_id, message)
 
         elif user_input == 'no':
-
             mid, end = update_bounds(value=False)
             if end:
-                message = 'Potential date of starting => ' + DATA[bound.sub_bound].asset.date
+                message = 'Potential date of starting => ' + DATA[bound.sup_bound].asset.date
                 bot.sendMessage(chat_id, message)
             else:
                 message = '? ' + DATA[mid].asset.date + ' - do you see it ? '
                 bot.sendMessage(chat_id, DATA[mid].image.url)
                 bot.sendMessage(chat_id, message)
+        else:
+            bot.sendMessage(chat_id, 'Sorry I\'m busy, enjoy this instead')
+            bot.sendVideo(chat_id, 'https://media.giphy.com/media/9n5UIlRppk91e/giphy.gif')
 
     else:
         raise ValueError('Nothing except text is allowed for now !')
@@ -231,7 +238,7 @@ if __name__ == '__main__':
     bisector = LandsatBisector(LON, LAT)
     DATA = bisector.shots
 
-    bound = Bound(0, len(DATA))  # Instantiate class to update the bisection process
+    bound = Bound(0, len(DATA)-1)  # Instantiate class to update the bisection process
 
     bot.message_loop(handle, run_forever=True)
 
