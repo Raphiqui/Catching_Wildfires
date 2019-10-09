@@ -1,5 +1,4 @@
 import json
-import time
 import pprint
 import telepot
 from nasa import earth
@@ -15,11 +14,13 @@ os.environ.setdefault(
 )
 
 
-DATA = None
+DATA = None  # Storage of shots to access them easily
 
 
 class Bound:
-
+    """
+    Represents the value of the array as interval
+    """
     def __init__(self, sub_bound, sup_bound):
         self._sub_bound = sub_bound
         self._sup_bound = sup_bound
@@ -130,7 +131,14 @@ class LandsatBisector:
         return out
 
 
-def bob(value):
+def update_bounds(value):
+
+    """
+    Update the bounds according to the user input
+    :param value: boolean as user input Yes/No
+    :return: integer, boolean as the new mid value and if the bisection process can't go further
+    """
+
     global DATA
     mid, end = None, False
 
@@ -156,24 +164,32 @@ def bob(value):
 
 
 def handle(msg):
+
+    """
+    Check the input of the user to redirect it in the correct way
+    :param msg: input from the user
+    :return: string as message to display to the user with some customization
+    """
+
     global DATA
 
     content_type, chat_type, chat_id = telepot.glance(msg)
     print(f'Content type: {content_type} || chat type: {chat_type} || chat id: {chat_id}')
 
     if content_type == 'text':
-        msg.get("text").lower()
 
-        if msg['text'] == '/start':
+        user_input = msg.get("text").lower()  # transform message input to non case sensitive input
+
+        if user_input == '/start':
 
             mid = int((bound.sub_bound + bound.sup_bound) / 2)
             message = '? ' + DATA[mid].asset.date + ' - do you see it ? '
             bot.sendMessage(chat_id, DATA[mid].image.url)
             bot.sendMessage(chat_id, message)
 
-        elif msg['text'] == 'yes':
+        elif user_input == 'yes':
 
-            mid, end = bob(value=True)
+            mid, end = update_bounds(value=True)
             if end:
                 message = 'Potential date of starting => ' + DATA[bound.sub_bound].asset.date
                 bot.sendMessage(chat_id, message)
@@ -182,9 +198,9 @@ def handle(msg):
                 bot.sendMessage(chat_id, DATA[mid].image.url)
                 bot.sendMessage(chat_id, message)
 
-        elif msg['text'] == 'no':
+        elif user_input == 'no':
 
-            mid, end = bob(value=False)
+            mid, end = update_bounds(value=False)
             if end:
                 message = 'Potential date of starting => ' + DATA[bound.sub_bound].asset.date
                 bot.sendMessage(chat_id, message)
@@ -208,13 +224,14 @@ def fetch_conf():
 
 
 if __name__ == '__main__':
+
     bot_token = fetch_conf()
     bot = telepot.Bot(bot_token)
 
     bisector = LandsatBisector(LON, LAT)
     DATA = bisector.shots
 
-    bound = Bound(0, len(DATA))
+    bound = Bound(0, len(DATA))  # Instantiate class to update the bisection process
 
     bot.message_loop(handle, run_forever=True)
 
