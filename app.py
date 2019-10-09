@@ -1,15 +1,10 @@
 import json
 import time
-import random
 import pprint
 import telepot
-from telepot.loop import MessageLoop
-import requests
-from telepot.namedtuple import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
 from nasa import earth
 from typing import NamedTuple, Any
 from tqdm import tqdm
-from PyInquirer import prompt
 import pendulum
 import os
 
@@ -149,10 +144,10 @@ def setup_bounds():
     return mid
 
 
-def bob(bound, value):
+def bob(value):
     global DATA
     mid, end = None, False
-    print(value)
+
     print(f'SUB_BOUND: {bound.sub_bound}')
     print(f'SUP_BOUND: {bound.sup_bound}')
 
@@ -194,9 +189,9 @@ def handle(msg):
 
         elif msg['text'] == 'yes':
 
-            mid, end = bob(bound, value=True)
+            mid, end = bob(value=True)
             if end:
-                message = 'Potential date of starting => ' + DATA[SUB_BOUND].asset.date
+                message = 'Potential date of starting => ' + DATA[bound.sub_bound].asset.date
                 bot.sendMessage(chat_id, message)
             else:
                 message = '? ' + DATA[mid].asset.date + ' - do you see it ? '
@@ -205,9 +200,9 @@ def handle(msg):
 
         elif msg['text'] == 'no':
 
-            mid, end = bob(bound, value=False)
+            mid, end = bob(value=False)
             if end:
-                message = 'Potential date of starting => ' + DATA[SUB_BOUND].asset.date
+                message = 'Potential date of starting => ' + DATA[bound.sub_bound].asset.date
                 bot.sendMessage(chat_id, message)
             else:
                 message = '? ' + DATA[mid].asset.date + ' - do you see it ? '
